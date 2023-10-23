@@ -7,6 +7,7 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=15, unique=True)
 
 
+
 # Модель записи
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
