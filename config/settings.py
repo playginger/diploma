@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-lj&1&exur_odg9cq!-ccru7eq@@mju83$p2y#(neqnf#bt#rm9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -166,3 +166,4 @@ if CACHE_ENABLED:
     }
 
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')

@@ -19,3 +19,9 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'content']
+
+
+class SubscriptionForm(forms.Form):
+    credit_card_number = forms.CharField(label='Credit Card Number')
+    expiration_date = forms.CharField(label='Expiration Date')
+    cvv = forms.CharField(label='CVV')

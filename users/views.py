@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
-from .forms import RegistrationForm, LoginForm, PostForm
+from .forms import RegistrationForm, LoginForm, PostForm, SubscriptionForm
 from django.contrib.auth import authenticate, login
 from .models import Post
+import stripe
+from django.conf import settings
+from stripe import error
 
 
 def registration_view(request):
@@ -46,3 +49,33 @@ def create_post_view(request):
 def view_post_view(request, post_id):
     post = Post.objects.get(id=post_id)
     return render(request, 'view_post.html', {'post': post})
+
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
+def process_payment(request):
+    if request.method == 'POST':
+        form = SubscriptionForm(request.POST)
+        if form.is_valid():
+            # Получите данные из формы
+            credit_card_number = form.cleaned_data['credit_card_number']
+            expiration_date = form.cleaned_data['expiration_date']
+            cvv = form.cleaned_data['cvv']
+
+            # Stripe API для обработки платежа
+            try:
+                charge = stripe.Charge.create(
+                    amount=1000,  # Сумма платежа
+                    currency='usd',
+                    source=credit_card_number,
+                    description='Subscription payment'
+                )
+                # Платеж успешно обработан
+                return render(request, 'payment_success.html')
+            except stripe.error.CardError:
+                # Ошибка обработки платежа
+                return render(request, 'payment_error.html')
+    else:
+        form = SubscriptionForm()
+    return render(request, 'subscription.html', {'form': form})

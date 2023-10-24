@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <title>Subscription Payment</title>
+</head>
+<body>
+  <h2>Subscription Payment</h2>
+
+  <form method="POST" action="{% url 'process_payment' %}">
+    {% csrf_token %}
+    <label for="credit-card-number">Credit Card Number</label>
+    <input type="text" id="credit-card-number" name="credit_card_number">
+
+    <label for="expiration-date">Expiration Date</label>
+    <input type="text" id="expiration-date" name="expiration_date">
+
+    <label for="cvv">CVV</label>
+    <input type="password" id="cvv" name="cvv">
+
+    <button type="submit">Pay</button>
+  </form>
+</body>
+</html>
