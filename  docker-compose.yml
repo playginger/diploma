@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db
+  db:
+    image: postgres:14.7-alpine
+    env_file:
+      - .env.docker
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  stripe:
+    image: stripe/stripe-cli:latest
+    volumes:
+      - ~/.stripe:/root/.config/stripe
+    environment:
+      - STRIPE_SECRET_KEY=os.getenv('STRIPE_SECRET_KEY')
+
+    command: >
+     bash -c "python manage.py migrate
+     && python manage.py runserver 0.0.0.0:8000"
+
+volumes:
+  pgdata:
