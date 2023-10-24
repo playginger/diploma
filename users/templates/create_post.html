@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <title>Создать запись</title>
+</head>
+<body>
+    <h1>Создать запись</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label>
+            <input type="text" name="title" placeholder="Заголовок">
+            <textarea name="content" placeholder="Содержание"></textarea>
+        </label><br>
+        <input type="submit" value="Создать">
+    </form>
+</body>
+</html>
