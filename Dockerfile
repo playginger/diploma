@@ -1,13 +1,17 @@
 FROM python:3.10-slim
 
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONUNBUFFERED 1
 
-WORKDIR /app/posts
+WORKDIR /app
 
-COPY ./requirements.txt .
+COPY requirements.txt /app/
 
-COPY . .
+RUN  pip install -r requirements.txt
 
-RUN ["python", "manage.py", "migrate"]
+COPY . /app/
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+COPY entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
+CMD ["/entrypoint.sh"]
