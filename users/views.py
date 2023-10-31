@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
+
 from .forms import RegistrationForm, LoginForm, PostForm, SubscriptionForm
 from django.contrib.auth import authenticate, login
 from .models import Post
@@ -40,7 +42,8 @@ def create_post_view(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            return redirect('home')
+            url = reverse('users:view_post', kwargs={"post_id": post.id})
+            return redirect(url)
     else:
         form = PostForm()
     return render(request, 'create_post.html', {'form': form})
