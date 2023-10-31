@@ -28,11 +28,6 @@ class YourAppTests(TestCase):
                                     {'username': 'testuser2', 'email': 'test2@example.com', 'password1': 'password',
                                      'password2': 'password', 'phone_number': '9876543210'})
         self.assertEqual(response.status_code, 200)
-        # self.assertTrue(get_user_model().objects.filter(username='testuser2').exists())
 
-    # def test_login_view(self):
-    #     response = self.client.post(reverse('users:login'), {'username': self.user.username, 'password': 'password'})
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertRedirects(response, reverse('users:home'))
-    #     self.assertIn('_auth_user_id', self.client.session)
+
 
